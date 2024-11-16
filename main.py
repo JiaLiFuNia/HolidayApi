@@ -28,6 +28,7 @@ def is_weekend(date):
     return [date.weekday() >= 5, weekDays[date.weekday()]]
 
 
+
 def is_holiday(date):
     holidays = get_holidays(date.year)
     if not holidays['holidays']:
