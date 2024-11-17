@@ -58,7 +58,7 @@ def is_date(date_str):
         return date
 
 
-@app.route("/", methods=['get'])
+@app.route("/holiday", methods=['get'])
 def today():
     datetime_date = is_date(request.args.get('date'))
     string_date = datetime_date.strftime('%Y-%m-%d')

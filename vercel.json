@@ -16,7 +16,7 @@
       "dest": "/api/holiday.py"
     },
     {
-      "src": "/news",
+      "src": "/version",
       "dest": "/api/version.py"
     }
   ]
