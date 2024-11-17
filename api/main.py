@@ -70,12 +70,14 @@ def today():
     else:
         isOffDay = holiday['isOffDay']
         holiday_name = holiday['name']
+        message = '假期愉快'
         if not isOffDay:
             holiday_name = holiday['name'] + '调休'
+            message = '调休愉快！'
         holiday = {
             'isLieu': not isOffDay,
             'holiday': holiday_name,
-            'message': '祝您假期愉快！'
+            'message': message
         }
     return jsonify(
         {
