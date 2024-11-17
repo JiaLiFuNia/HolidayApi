@@ -1,8 +1,23 @@
 {
-    "rewrites": [
-        {
-            "source": "/(.*)",
-            "destination": "/api/main"
-        }
-    ]
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/holiday.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "api/version.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/holiday",
+      "dest": "/api/holiday.py"
+    },
+    {
+      "src": "/news",
+      "dest": "/api/version.py"
+    }
+  ]
 }
