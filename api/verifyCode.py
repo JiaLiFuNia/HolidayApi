@@ -1,6 +1,7 @@
 import base64
 import json
 import os
+import time
 
 import requests
 from flask import Flask, request, jsonify
@@ -11,7 +12,7 @@ app = Flask(__name__)
 def base64_api(uname, pwd, b64, typeid):
     data = {"username": uname, "password": pwd, "typeid": typeid, "image": b64}
     result = json.loads(requests.post(url="http://api.ttshitu.com/predict", json=data).text)
-    # print(result)
+    print(result)
     if result['code'] == "0":
         return result["data"]["result"]
     else:
@@ -34,8 +35,11 @@ def verify_code(url, cookies):
 
 @app.route("/verificationCode", methods=['get'])
 def secondClass():
-    # time_stamp = request.form.get("time")
-    img_url = "http://dekt.htu.edu.cn/img/resources-code.jpg?" + "time_stamp"
+    if request.form.get("time") is not None:
+        time_stamp = request.form.get("time")
+    else:
+        time_stamp = str(int(time.time() * 1000))
+    img_url = "http://dekt.htu.edu.cn/img/resources-code.jpg?" + time_stamp
     verify_res = verify_code(img_url, request.cookies)
     if verify_res:
         result = verify_res
