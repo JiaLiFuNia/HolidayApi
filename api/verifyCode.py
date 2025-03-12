@@ -19,12 +19,12 @@ def base64_api(uname, pwd, b64, typeid):
         return "验证码识别失败"
 
 
-def verify_code(url, cookies):
+def verify_code(url, cookies, headers):
     uname = os.environ.get("TT_ACCOUNT")
     pwd = os.environ.get("TT_PWD")
     print(uname, pwd)
     try:
-        img_res = requests.get(url=url, cookies=cookies, verify=False).content
+        img_res = requests.get(url=url, cookies=cookies, headers=headers, verify=False).content
         base64_data = base64.b64encode(img_res)
         b64 = base64_data.decode()
         verifycode = base64_api(uname=uname, pwd=pwd, b64=b64, typeid=3)
@@ -40,7 +40,7 @@ def secondClass():
     else:
         time_stamp = str(int(time.time() * 1000))
     img_url = "http://dekt.htu.edu.cn/img/resources-code.jpg?" + time_stamp
-    verify_res = verify_code(img_url, request.cookies)
+    verify_res = verify_code(img_url, request.cookies, request.headers)
     if verify_res:
         result = verify_res
     else:
