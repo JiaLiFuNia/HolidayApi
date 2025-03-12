@@ -26,6 +26,10 @@
     {
       "src": "/verifyCode",
       "dest": "/api/verifyCode.py"
+    },
+    {
+      "src": "/verificationCode",
+      "dest": "/api/verifyCode.py"
     }
   ]
 }
