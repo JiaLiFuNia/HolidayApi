@@ -22,7 +22,7 @@ def base64_api(uname, pwd, b64, typeid):
 def verify_code(url, cookies):
     uname = os.environ.get("TT_ACCOUNT")
     pwd = os.environ.get("TT_PWD")
-
+    print(uname, pwd)
     try:
         img_res = requests.get(url=url, cookies=cookies, verify=False).content
         base64_data = base64.b64encode(img_res)
