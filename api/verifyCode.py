@@ -16,15 +16,17 @@ def base64_api(uname, pwd, b64, typeid):
     if result['code'] == "0":
         return result["data"]["result"]
     else:
-        return "验证码识别失败"
+        return False
 
 
-def verify_code(url, cookies, headers):
+def verify_code(url, cookies):
     uname = os.environ.get("TT_ACCOUNT")
     pwd = os.environ.get("TT_PWD")
+
     print(uname, pwd)
+    print(cookies)
     try:
-        img_res = requests.get(url=url, cookies=cookies, headers=headers, verify=False).content
+        img_res = requests.get(url=url, cookies=cookies, verify=False).content
         base64_data = base64.b64encode(img_res)
         b64 = base64_data.decode()
         verifycode = base64_api(uname=uname, pwd=pwd, b64=b64, typeid=3)
@@ -39,8 +41,11 @@ def secondClass():
         time_stamp = request.form.get("time")
     else:
         time_stamp = str(int(time.time() * 1000))
+    cookies = {'sid': ""}
+    if request.cookies.get("sid") is not None:
+        cookies['sid'] = request.cookies.get("sid")
     img_url = "http://dekt.htu.edu.cn/img/resources-code.jpg?" + time_stamp
-    verify_res = verify_code(img_url, request.cookies, request.headers)
+    verify_res = verify_code(img_url, cookies)
     if verify_res:
         result = verify_res
     else:
@@ -56,7 +61,7 @@ def main():
     img_url = request.form.get("url")
     type = request.form.get("type")
     if type == "dekt":
-        verify_res = verify_code(img_url, request.cookies)
+        verify_res = verify_code(img_url, request.cookies, request.headers)
         if verify_res:
             code = 200
             result = verify_res
